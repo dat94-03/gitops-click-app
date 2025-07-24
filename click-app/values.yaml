@@ -1,7 +1,7 @@
 namespace: biglab
 backend:
   image: tiendatdev94/click-app-backend
-  tag: ${DOCKER_TAG}
+  tag: '40'
   serviceType: ClusterIP
   resources:
     requests:
@@ -17,7 +17,7 @@ backend:
       }}@mongodb.{{ .Values.namespace }}.svc.cluster.local:27017/clickcounter?authSource=clickcounter
 frontend:
   image: tiendatdev94/click-app-frontend
-  tag: ${DOCKER_TAG}
+  tag: '40'
   serviceType: LoadBalancer
   resources:
     requests:
