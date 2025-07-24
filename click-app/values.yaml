@@ -1,7 +1,7 @@
 namespace: biglab
 backend:
   image: tiendatdev94/click-app-backend
-  tag: '40'
+  tag: '41'
   serviceType: ClusterIP
   resources:
     requests:
@@ -17,7 +17,7 @@ backend:
       }}@mongodb.{{ .Values.namespace }}.svc.cluster.local:27017/clickcounter?authSource=clickcounter
 frontend:
   image: tiendatdev94/click-app-frontend
-  tag: '40'
+  tag: '41'
   serviceType: LoadBalancer
   resources:
     requests:
@@ -28,7 +28,7 @@ frontend:
       memory: 256Mi
 mongodb:
   image: tiendatdev94/click-app-db
-  tag: latest
+  tag: '41'
   username: tiendat
   password: dat123
   database: clickcounter
