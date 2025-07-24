@@ -43,13 +43,13 @@ spec:
               memory: {{ .Values.backend.resources.limits.memory }}
           livenessProbe:
             httpGet:
-              path: /healthz
+              path: /health
               port: {{ .Values.backend.env.PORT }}
             initialDelaySeconds: 10
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /healthz
+              path: /health
               port: {{ .Values.backend.env.PORT }}
             initialDelaySeconds: 5
             periodSeconds: 5 
