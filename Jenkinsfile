@@ -1,38 +1,42 @@
-pipeline{
-    agent {label "Jenkins-Agent"}
-    environment{
-        APP_NAME = "register-app-pipeline"
-    }
-    stages{
-        stage("Cleanup Workspace"){
-            steps{
-                cleanWs()
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout Manifests') {
+            steps {
+                git branch: 'main', url: 'https://github.com/yourorg/gitops-repo.git'
             }
         }
-        stage("Checkout from SCM"){
-            steps{
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/MSFaizi/gitops-register-app'
+
+        stage('Validate Helm Charts') {
+            steps {
+                sh '''
+                helm lint charts/app
+                helm template charts/app --values charts/app/values-staging.yaml
+                '''
             }
         }
-        stage("Update the Deployment Tags"){
-            steps{
-                sh """ 
-                cat deployment.yaml
-                sed -i 's/${APP_NAME}.*/${APP_NAME}:${IMAGE_TAG}/g' deployment.yaml
-                cat deployment.yaml
-                """
+
+        stage('Sync to Cluster (optional, GitOps)') {
+            steps {
+                withKubeConfig([credentialsId: 'eks-kubeconfig']) {
+                    sh '''
+                    helm upgrade --install app-staging charts/app \
+                        --namespace app-staging \
+                        --create-namespace \
+                        --values charts/app/values-staging.yaml
+                    '''
+                }
             }
         }
-        stage("Push the changed deployment file to git"){
-            steps{
-                sh """
-                git config --global user.name "MSFaizi"
-                git config --global user.email "kode2cloud@gmail.com"
-                git add deployment.yaml
-                git commit -m "Updated Deployment manifest"
-                """
-                withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]){
-                    sh "git push https://github.com/MSFaizi/gitops-register-app main "
+
+        stage('Audit Rollout (optional)') {
+            steps {
+                withKubeConfig([credentialsId: 'eks-kubeconfig']) {
+                    sh '''
+                    kubectl get deployment app-staging -n app-staging
+                    kubectl rollout status deployment/app-staging -n app-staging
+                    '''
                 }
             }
         }

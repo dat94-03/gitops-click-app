@@ -1,0 +1,48 @@
+# Default values for click-app.
+# This is a YAML-formatted file.
+
+namespace: biglab
+
+backend:
+  image: tiendatdev94/click-app-backend
+  tag: latest
+  serviceType: ClusterIP
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi
+  env:
+    NODE_ENV: production
+    PORT: 5000
+    MONGODB_URI: "mongodb://{{ .Values.mongodb.username }}:{{ .Values.mongodb.password }}@mongodb.{{ .Values.namespace }}.svc.cluster.local:27017/clickcounter?authSource=clickcounter"
+
+frontend:
+  image: tiendatdev94/click-app-frontend
+  tag: latest
+  serviceType: LoadBalancer
+  resources:
+    requests:
+      cpu: 50m
+      memory: 64Mi
+    limits:
+      cpu: 200m
+      memory: 256Mi
+
+mongodb:
+  image: tiendatdev94/click-app-db
+  tag: latest
+  username: tiendat
+  # password: set via --set or secret management, not here!
+  database: clickcounter
+  storageClass: gp2
+  storage: 1Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 512Mi 
