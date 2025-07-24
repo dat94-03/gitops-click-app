@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: tiendatdev94/click-app-frontend:v4
+        image: tiendatdev94/click-app-frontend:37
         ports:
         - containerPort: 80
         env:

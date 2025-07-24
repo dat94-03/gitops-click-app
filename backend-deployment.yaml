@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: tiendatdev94/click-app-backend:v1
+        image: tiendatdev94/click-app-backend:37
         ports:
         - containerPort: 5000
         envFrom:
