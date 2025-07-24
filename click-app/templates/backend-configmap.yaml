@@ -6,4 +6,4 @@ metadata:
 data:
   NODE_ENV: {{ .Values.backend.env.NODE_ENV | quote }}
   PORT: {{ .Values.backend.env.PORT | quote }}
-  MONGODB_URI: {{ .Values.backend.env.MONGODB_URI | quote }} 
+  MONGODB_URI: {{ printf "mongodb://%s:%s@mongodb.%s.svc.cluster.local:27017/clickcounter?authSource=clickcounter" .Values.mongodb.username .Values.mongodb.password .Values.namespace | quote }}
