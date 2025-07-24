@@ -36,6 +36,7 @@ mongodb:
   tag: latest
   username: tiendat
   # password: set via --set or secret management, not here!
+  password: dat123
   database: clickcounter
   storageClass: gp2
   storage: 1Gi
