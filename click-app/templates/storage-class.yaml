@@ -3,5 +3,5 @@ kind: StorageClass
 metadata:
   name: {{ .Values.mongodb.storageClass }}
 provisioner: kubernetes.io/aws-ebs
-reclaimPolicy: Retain
+reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer 
