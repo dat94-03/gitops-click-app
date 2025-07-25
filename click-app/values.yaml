@@ -18,7 +18,7 @@ backend:
 frontend:
   image: tiendatdev94/click-app-frontend
   tag: '42'
-  serviceType: LoadBalancer
+  serviceType: ClusterIP
   resources:
     requests:
       cpu: 50m
