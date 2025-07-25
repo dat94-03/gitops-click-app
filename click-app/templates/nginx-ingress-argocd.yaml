@@ -5,21 +5,20 @@ metadata:
   namespace: biglab
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   ingressClassName: nginx
   rules:
     - http:
         paths:
-          - path: /api/*
-            pathType: ImplementationSpecific
+          - path: /api/
+            pathType: Prefix
             backend:
               service:
                 name: backend
                 port:
                   number: 5000
           - path: /
-            pathType: ImplementationSpecific
+            pathType: Prefix
             backend:
               service:
                 name: frontend
