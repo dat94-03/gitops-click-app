@@ -1,24 +1,28 @@
-# nginx-ingress-argocd.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: argocd-server-ingress
   namespace: argocd
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: ingress-nginx
-  project: default
-  source:
-    repoURL: https://kubernetes.github.io/ingress-nginx
-    chart: ingress-nginx
-    targetRevision: 4.10.0  # pick latest stable
-    helm:
-      values: |
-        controller:
-          service:
-            type: LoadBalancer
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  ingressClassName: nginx
+  rules:
+  - http:
+        paths:
+          - path: /api/*
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: backend
+                port:
+                  number: 5000
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 80 
+
