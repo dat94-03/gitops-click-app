@@ -29,6 +29,9 @@ frontend:
 mongodb:
   image: tiendatdev94/click-app-db
   tag: '51'
+  # These will be updated by Jenkins with secure credentials
+  username: "placeholder-username"
+  password: "placeholder-password"
   database: clickcounter
   storageClass: gp2
   storage: 1Gi
