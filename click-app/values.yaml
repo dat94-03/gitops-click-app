@@ -1,7 +1,7 @@
 namespace: biglab
 backend:
   image: tiendatdev94/click-app-backend
-  tag: '51'
+  tag: '59'
   serviceType: ClusterIP
   resources:
     requests:
@@ -17,7 +17,7 @@ backend:
       }}@mongodb.{{ .Values.namespace }}.svc.cluster.local:27017/clickcounter?authSource=clickcounter
 frontend:
   image: tiendatdev94/click-app-frontend
-  tag: '51'
+  tag: '59'
   serviceType: ClusterIP
   resources:
     requests:
@@ -28,10 +28,9 @@ frontend:
       memory: 256Mi
 mongodb:
   image: tiendatdev94/click-app-db
-  tag: '51'
-  # These will be updated by Jenkins with secure credentials
-  username: "placeholder-username"
-  password: "placeholder-password"
+  tag: '59'
+  username: tiendat
+  password: dat123
   database: clickcounter
   storageClass: gp2
   storage: 1Gi
