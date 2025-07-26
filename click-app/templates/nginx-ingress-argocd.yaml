@@ -1,29 +1,3 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: biglab-ingress
-#   namespace: biglab
-#   annotations:
-#     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-# spec:
-#   ingressClassName: nginx
-#   rules:
-#     - http:
-#         paths:
-#           - path: /api/
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: backend
-#                 port:
-#                   number: 5000
-#           - path: /
-#             pathType: Prefix
-#             backend:
-#               service:
-#                 name: frontend
-#                 port:
-#                   number: 80
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -47,7 +21,7 @@ spec:
                   number: 5000
           - path: /
             pathType: Prefix
-            backend:
+            frontend:
               service:
                 name: frontend
                 port:

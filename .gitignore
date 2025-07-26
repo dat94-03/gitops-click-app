@@ -1,1 +1,38 @@
-old/
+# Secrets and sensitive files
+*.env
+.env
+.env.*
+secrets/
+secrets.yaml
+secrets.yml
+*-secrets.yaml
+*-secrets.yml
+
+# Kubernetes secrets
+kubeconfig
+*.kubeconfig
+
+# Jenkins
+.jenkins/
+jenkins_home/
+
+# Docker
+.dockerignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp

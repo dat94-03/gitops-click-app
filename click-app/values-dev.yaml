@@ -1,4 +1,9 @@
-namespace: biglab
+# Development environment values
+# This file should NOT contain actual secrets
+# Secrets are managed externally via Kubernetes secrets or external-secrets-operator
+
+namespace: biglab-dev
+
 backend:
   image: tiendatdev94/click-app-backend
   tag: '49'
@@ -11,10 +16,11 @@ backend:
       cpu: 500m
       memory: 512Mi
   env:
-    NODE_ENV: production
+    NODE_ENV: development
     PORT: 5000
-    MONGODB_URI: mongodb://{{ .Values.mongodb.username }}:{{ .Values.mongodb.password
-      }}@mongodb.{{ .Values.namespace }}.svc.cluster.local:27017/clickcounter?authSource=clickcounter
+    # MongoDB URI will be constructed from secrets
+    MONGODB_URI: mongodb://${MONGODB_USERNAME}:${MONGODB_PASSWORD}@mongodb.${NAMESPACE}.svc.cluster.local:27017/clickcounter?authSource=clickcounter
+
 frontend:
   image: tiendatdev94/click-app-frontend
   tag: '49'
@@ -26,6 +32,7 @@ frontend:
     limits:
       cpu: 200m
       memory: 256Mi
+
 mongodb:
   image: tiendatdev94/click-app-db
   tag: '49'
@@ -38,4 +45,4 @@ mongodb:
       memory: 128Mi
     limits:
       cpu: 500m
-      memory: 512Mi
+      memory: 512Mi 
