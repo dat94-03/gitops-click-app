@@ -4,7 +4,7 @@ metadata:
   name: backend-deployment
   namespace: {{ .Values.namespace }}
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -44,13 +44,13 @@ spec:
               memory: {{ .Values.backend.resources.limits.memory }}
           livenessProbe:
             httpGet:
-              path: /health
+              path: health
               port: {{ .Values.backend.env.PORT }}
             initialDelaySeconds: 10
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /health
+              path: health
               port: {{ .Values.backend.env.PORT }}
             initialDelaySeconds: 5
             periodSeconds: 5 
